@@ -1,10 +1,14 @@
-
+## 开始准备
 本地需要先启动mysql
-查看数据 mysql -u root -p
+
+## 进入mysql
+命令： mysql -u root -p
+
+创建自己的数据库database
 
 ## mysql字符集配置
 文件 /etc/my.cnf，配置为
-```
+```conf
 [mysqld]
 # 设置默认字符集和排序规则
 character-set-server=utf8mb4
@@ -35,15 +39,9 @@ collation_server 应为 utf8mb4_unicode_ci。
 ALTER DATABASE your_database CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 修改前：
-+----------------------------+------------------------+
-| DEFAULT_CHARACTER_SET_NAME | DEFAULT_COLLATION_NAME |
-+----------------------------+------------------------+
-| latin1                     | latin1_swedish_ci      |
-+----------------------------+------------------------+
+- DEFAULT_CHARACTER_SET_NAME: latin1
+- DEFAULT_COLLATION_NAME: latin1_swedish_ci
 
 修改后：
-+----------------------------+------------------------+
-| DEFAULT_CHARACTER_SET_NAME | DEFAULT_COLLATION_NAME |
-+----------------------------+------------------------+
-| utf8mb4                    | utf8mb4_unicode_ci     |
-+----------------------------+------------------------+
+- DEFAULT_CHARACTER_SET_NAME: utf8mb4
+- DEFAULT_COLLATION_NAME: utf8mb4_unicode_ci
