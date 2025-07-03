@@ -36,9 +36,6 @@ def hk_basic():
 
     print("获取全部可交易股票基础信息")
     df = pro.hk_basic()
-
-    # 首次运行，自动建表，但是写入会报错，需要根据同目录下mysql.sql里面的语句对表进行修改
-    # 然后重新运行 成功
     df.to_sql('hk_basic', engine_ts, index=False, if_exists='append', chunksize=5000) 
 
     # print("获取全部退市股票基础信息")
@@ -53,13 +50,29 @@ def hk_tradecal():
     df = pro.hk_tradecal(start_date='20180101', end_date='20211231')
     df.to_sql('hk_tradecal', engine_ts, index=False, if_exists='replace', chunksize=5000) 
 
+def ggt_top10(trade_date):
+    print("港股通十大成交股",trade_date)
+    df = pro.ggt_top10(trade_date=trade_date)
+    df.to_sql('ggt_top10', engine_ts, index=False, if_exists='replace', chunksize=5000) 
+
+def multi_ggt_top10():
+    start_date = datetime(2025, 7, 1)  # 起始日期
+
+    for i in range(300):  # 往前n天
+        date = (start_date - timedelta(days=i)).strftime("%Y%m%d")
+        ggt_top10(date)
+        time.sleep(0.5)
 
 def run():
     # 港股列表
     # hk_basic()
 
     # 港股交易日
-    hk_tradecal()
+    # hk_tradecal()
+
+    # 港股通十大成交股
+    # ggt_top10('20250702')
+    multi_ggt_top10()
 
 
 if __name__ == '__main__':
