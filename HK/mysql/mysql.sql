@@ -56,3 +56,21 @@ ALTER TABLE ggt_top10 ADD PRIMARY KEY ( `trade_date`,`ts_code`,`market_type`);
 -- | sz_buy        | double      | YES  |     | NULL    |       |
 -- | sz_sell       | double      | YES  |     | NULL    |       |
 -- +---------------+-------------+------+-----+---------+-------+
+
+
+
+-------------- ggt_daily 操作记录 -----------------
+-- 设置ts_code为主键，防止重复数据
+ALTER TABLE ggt_daily change trade_date trade_date varchar(20);
+ALTER TABLE ggt_daily ADD PRIMARY KEY ( `trade_date`);
+
+-- +-------------+-------------+------+-----+---------+-------+
+-- | Field       | Type        | Null | Key | Default | Extra |
+-- +-------------+-------------+------+-----+---------+-------+
+-- | trade_date  | varchar(20) | NO   | PRI | NULL    |       |
+-- | buy_amount  | double      | YES  |     | NULL    |       |
+-- | buy_volume  | double      | YES  |     | NULL    |       |
+-- | sell_amount | double      | YES  |     | NULL    |       |
+-- | sell_volume | double      | YES  |     | NULL    |       |
+-- +-------------+-------------+------+-----+---------+-------+
+-- 5 rows in set (0.00 sec)

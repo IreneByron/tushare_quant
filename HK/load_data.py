@@ -45,23 +45,39 @@ def hk_basic():
     # df = pro.hk_basic(list_status='L')
 
 
+# 港股交易日
 def hk_tradecal():
     print("港股交易日")
     df = pro.hk_tradecal(start_date='20180101', end_date='20211231')
-    df.to_sql('hk_tradecal', engine_ts, index=False, if_exists='replace', chunksize=5000) 
+    df.to_sql('hk_tradecal', engine_ts, index=False, if_exists='append', chunksize=5000) 
 
+# 港股通十大成交股
 def ggt_top10(trade_date):
     print("港股通十大成交股",trade_date)
     df = pro.ggt_top10(trade_date=trade_date)
-    df.to_sql('ggt_top10', engine_ts, index=False, if_exists='replace', chunksize=5000) 
+    df.to_sql('ggt_top10', engine_ts, index=False, if_exists='append', chunksize=5000) 
 
+# 港股通十大成交股
 def multi_ggt_top10():
-    start_date = datetime(2025, 7, 1)  # 起始日期
+    start_date = datetime(2025, 7, 2)  # 起始日期
 
     for i in range(300):  # 往前n天
         date = (start_date - timedelta(days=i)).strftime("%Y%m%d")
         ggt_top10(date)
         time.sleep(0.5)
+
+# 港股通每日成交统计
+def ggt_daily():
+    print("港股通每日成交统计")
+    #获取单日全部统计
+    # df = pro.ggt_daily(trade_date='20250702')
+
+    #获取多日统计信息
+    # df = pro.ggt_daily(trade_date='20190925,20180924,20170925')
+
+    #获取时间段统计信息
+    df = pro.ggt_daily(start_date='20230101', end_date='20250702')
+    df.to_sql('ggt_daily', engine_ts, index=False, if_exists='append', chunksize=5000) 
 
 def run():
     # 港股列表
@@ -72,7 +88,9 @@ def run():
 
     # 港股通十大成交股
     # ggt_top10('20250702')
-    multi_ggt_top10()
+    # multi_ggt_top10()
+
+    ggt_daily()
 
 
 if __name__ == '__main__':
